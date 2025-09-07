@@ -1,0 +1,259 @@
+/* Base Themes */
+body.dark {
+  --text: #e6eef8;
+  --card: rgba(4, 10, 27, 0.6);
+  --accent: #2563eb;
+  --muted: #93c5fd;
+}
+
+body.light {
+  --text: #111827;
+  --card: rgba(196, 181, 239, 0.7);
+  --accent: #07132d;
+  --muted: #475569;
+}
+
+/* Dynamic Backgrounds */
+body.default {
+  background: linear-gradient(180deg, #4060c9, #111827);
+}
+body.sunny {
+  background: linear-gradient(135deg, #facc15, #f97316, #fb923c);
+}
+body.rainy {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb, #38bdf8);
+}
+body.night {
+  background: linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body,
+#root {
+  height: 100%;
+  font-family: Inter, sans-serif;
+  color: var(--text);
+}
+
+/* Background Effects Layer */
+.background-effects {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Rain animation */
+body.rainy .background-effects::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.3) 2px,
+    transparent 2px
+  );
+  background-size: 2px 20px;
+  animation: rain 0.5s linear infinite;
+}
+@keyframes rain {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 20px;
+  }
+}
+
+/* Sun rays */
+body.sunny .background-effects::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin-left: -100px;
+  background: radial-gradient(circle, rgba(255, 255, 0, 0.5), transparent 70%);
+  border-radius: 50%;
+  animation: sun-rays 8s linear infinite;
+}
+@keyframes sun-rays {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+
+/* Night stars */
+body.night .background-effects::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: twinkle 3s infinite alternate;
+}
+@keyframes twinkle {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* App Layout */
+.app-root {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+.title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.theme-toggle {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 15px;
+  background: var(--accent);
+  color: #4a4949;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 5px;
+  padding: 20px;
+}
+
+.city-input {
+  flex: 1px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: var(--card);
+  color: var(--text);
+  backdrop-filter: blur(12px);
+}
+
+.search-btn {
+  padding: 12px 18px;
+  border-radius: 25px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Cards Layout */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card {
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.temp-big {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Hourly Forecast */
+.hourly-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 15px 0;
+}
+
+.hour-card {
+  min-width: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Daily Forecast */
+.daily-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.day-card {
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.day-icon {
+  font-size: 1.6rem;
+  margin: 4px 0;
+}
+
+/* Notices */
+.notice {
+  margin: 12px 0;
+  padding: 10px;
+  border-radius: 10px;
+}
+.notice.error {
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 20px;
+  margin-top: auto;
+}
+
+/* Desktop Centering */
+@media (min-width: 900px) {
+  .cards {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
